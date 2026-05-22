@@ -1,10 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminDash">
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Admin Dashboard"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="40dp"/>
+
+    <Button
+        android:id="@+id/btnAddCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Add New Customer"
+        android:layout_marginBottom="15dp"/>
+
+    <Button
+        android:id="@+id/btnAddMechanic"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Add New Mechanic"
+        android:layout_marginBottom="15dp"/>
+
+    <Button
+        android:id="@+id/btnAddVehicle"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Add New Vehicle"
+        android:layout_marginBottom="15dp"/>
+
+    <Button
+        android:id="@+id/btnViewRecords"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="View System Records"
+        android:backgroundTint="#4CAF50"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
