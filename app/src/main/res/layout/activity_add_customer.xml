@@ -49,7 +49,9 @@
     <Button
         android:id="@+id/btnSaveCustomer"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Save Customer" />
+        android:layout_height="wrap_content"
+        android:text="Add Customer"
+        />
+
 
 </LinearLayout>

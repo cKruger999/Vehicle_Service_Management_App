@@ -41,7 +41,8 @@
     <Button
         android:id="@+id/btnSaveMechanic"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Save Mechanic" />
+        android:layout_height="wrap_content"
+        android:text="Add Mechanic"
+        />
 
 </LinearLayout>

@@ -75,6 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             return true;
         }
     }
+
     public boolean insertMechanic(String name, String specialization, String experience) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -83,8 +84,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         cv.put("yearsOfExperience", experience);
 
         long result = db.insert("Mechanics", null, cv);
-        return result != -1;
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
     }
+
     public boolean insertVehicle(String brand, String model, String regNumber, String year, String customerId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -95,16 +101,53 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         cv.put("customerID", customerId);
 
         long result = db.insert("Vehicles", null, cv);
-        return result != -1;
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
     }
+
+    // =========================================================================================
+    // READ (GET) METHODS
+    // =========================================================================================
+
+    // --- Customers ---
     public Cursor getAllCustomers() {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM Customers", null);
     }
+
     public Cursor getCustomerById(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM Customers WHERE customerID = ?", new String[]{id});
     }
+
+    // --- Mechanics ---
+    public Cursor getAllMechanics() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM Mechanics", null);
+    }
+
+    public Cursor getMechanicById(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM Mechanics WHERE mechanicID = ?", new String[]{id});
+    }
+
+    // --- Vehicles ---
+    public Cursor getAllVehicles() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM Vehicles", null);
+    }
+
+    public Cursor getVehicleById(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM Vehicles WHERE vehicleID = ?", new String[]{id});
+    }
+
+    // =========================================================================================
+    // UPDATE METHODS
+    // =========================================================================================
 
     public boolean updateCustomer(String id, String name, String surname, String phone, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -122,9 +165,65 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
     }
 
+    public boolean updateMechanic(String id, String name, String specialization, String experience) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("mechanicName", name);
+        cv.put("specialization", specialization);
+        cv.put("yearsOfExperience", experience);
+
+        long result = db.update("Mechanics", cv, "mechanicID=?", new String[]{id});
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean updateVehicle(String id, String brand, String model, String reg, String year, String custId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("vehicleBrand", brand);
+        cv.put("vehicleModel", model);
+        cv.put("registrationNumber", reg);
+        cv.put("vehicleYear", year);
+        cv.put("customerID", custId);
+
+        long result = db.update("Vehicles", cv, "vehicleID=?", new String[]{id});
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // =========================================================================================
+    // DELETE METHODS
+    // =========================================================================================
+
     public boolean deleteCustomer(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete("Customers", "customerID=?", new String[]{id});
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean deleteMechanic(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete("Mechanics", "mechanicID=?", new String[]{id});
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean deleteVehicle(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete("Vehicles", "vehicleID=?", new String[]{id});
         if (result == -1) {
             return false;
         } else {
