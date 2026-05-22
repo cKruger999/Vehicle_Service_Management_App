@@ -22,7 +22,6 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
         editUsername = findViewById(R.id.etUsername);
@@ -39,14 +38,14 @@ public class Login extends AppCompatActivity {
 
                 if (username.isEmpty() || password.isEmpty()) {
                     Toast.makeText(Login.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
-                    return; // Stop the code here if validation fails
+                    return;
                 }
 
                 String userRole = dbHelper.authenticateUser(username, password);
 
                 if (userRole != null) {
                     Toast.makeText(Login.this, "Welcome " + username + " (" + userRole + ")", Toast.LENGTH_SHORT).show();
-
+                    String profileId = dbHelper.getRoleBasedId(username, userRole);
                     Intent intent = null;
 
                     switch (userRole) {
@@ -54,10 +53,12 @@ public class Login extends AppCompatActivity {
                             intent = new Intent(Login.this, AdminDash.class);
                             break;
                         case "Mechanic":
-                            intent = new Intent(Login.this,MechanicDash.class);
+                            intent = new Intent(Login.this, MechanicDash.class);
+                            intent.putExtra("MECHANIC_ID", profileId); // Dynamic fallback for mechanic tracking later
                             break;
                         case "Customer":
                             intent = new Intent(Login.this, CustomerDash.class);
+                            intent.putExtra("CUSTOMER_ID", profileId); // Pass dynamic ID straight to customer garage view
                             break;
                     }
 
