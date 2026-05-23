@@ -31,8 +31,8 @@ public class CustomerUpdateDetails extends AppCompatActivity {
         etEmail = findViewById(R.id.Email);
         btnUpdate = findViewById(R.id.btnUpdate);
 
-        if (getIntent().hasExtra("CUSTOMER_ID")) {
-            customerId = getIntent().getStringExtra("CUSTOMER_ID");
+        if (getIntent().hasExtra("LOGGED_IN_CUSTOMER_ID")) {
+            customerId = getIntent().getStringExtra("LOGGED_IN_CUSTOMER_ID");
 
             Cursor cursor = myDb.getCustomerById(customerId);
 

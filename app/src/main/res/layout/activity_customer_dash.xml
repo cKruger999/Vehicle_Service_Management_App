@@ -3,26 +3,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="30dp"
+    android:gravity="center_horizontal">
 
     <TextView
+        android:id="@+id/tvCustomerWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="My Vehicles"
-        android:textSize="24sp"
+        android:text="My Dashboard"
+        android:textSize="28sp"
         android:textStyle="bold"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="20dp"/>
 
     <Button
-        android:id="@+id/btnUpdateCust"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Contact Details"/>
-
-    <ListView
-        android:id="@+id/lvCustomersGarage"
+        android:id="@+id/btnViewMyVehicles"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="#DDDDDD"
-        android:dividerHeight="1dp" />
+        android:layout_height="65dp"
+        android:text="My Vehicles"
+        android:textSize="16sp"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/btnViewMyBookings"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:text="Service Bookings"
+        android:textSize="16sp"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/btnUpdateProfile"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:text="Update Contact Details"
+        android:textSize="16sp"
+        android:layout_marginBottom="40dp"/>
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:text="Logout"
+        android:textSize="16sp"
+        android:backgroundTint="#F44336" />
 </LinearLayout>

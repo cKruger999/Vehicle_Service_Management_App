@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Vehicle_Service_Management_App">
         <activity
+            android:name=".CustomerViewVehicle"
+            android:exported="false" />
+        <activity
             android:name=".CustomerUpdateDetails"
             android:exported="false" />
         <activity
