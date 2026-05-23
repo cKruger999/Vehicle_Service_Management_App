@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MechanicDash extends AppCompatActivity {
 
     TextView tvMechanicWelcome;
-    Button btnCreateBooking, btnViewBookings, btnUpdateStatus;
+    Button btnCreateBooking, btnViewBookings, btnUpdateStatus, btnLogout;
     String mechanicName;
 
     @Override
@@ -25,9 +25,10 @@ public class MechanicDash extends AppCompatActivity {
         }
 
         tvMechanicWelcome = findViewById(R.id.tvMechanicWelcome);
-        btnCreateBooking = findViewById(R.id.btnCreateBooking);
-        btnViewBookings = findViewById(R.id.btnViewBookings);
-        btnUpdateStatus = findViewById(R.id.btnUpdateStatus);
+        btnCreateBooking  = findViewById(R.id.btnCreateBooking);
+        btnViewBookings   = findViewById(R.id.btnViewBookings);
+        btnUpdateStatus   = findViewById(R.id.btnUpdateStatus);
+        btnLogout         = findViewById(R.id.btnLogout);
 
         tvMechanicWelcome.setText("Welcome, " + mechanicName);
 
@@ -54,6 +55,15 @@ public class MechanicDash extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MechanicDash.this, UpdateServiceStatusActivity.class);
                 intent.putExtra("MECHANIC_NAME", mechanicName);
+                startActivity(intent);
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MechanicDash.this, Login.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });

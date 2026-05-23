@@ -192,10 +192,22 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return db.rawQuery(
                 "SELECT Bookings.bookingID AS _id, Bookings.serviceType, Bookings.bookingDate, " +
                         "Bookings.serviceStatus, Bookings.assignedMechanic, Bookings.vehicleID, " +
-                        "Vehicles.registrationNumber FROM Bookings " +
-                        "LEFT JOIN Vehicles ON Bookings.vehicleID = Vehicles.vehicleID " +
+                        "Vehicles.registrationNumber, Vehicles.vehicleBrand, Vehicles.vehicleModel, Vehicles.vehicleType " +
+                        "FROM Bookings LEFT JOIN Vehicles ON Bookings.vehicleID = Vehicles.vehicleID " +
                         "WHERE Bookings.assignedMechanic = ?",
                 new String[]{mechanicName}
+        );
+    }
+
+    public Cursor getBookingsByMechanicAndStatus(String mechanicName, String status) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(
+                "SELECT Bookings.bookingID AS _id, Bookings.serviceType, Bookings.bookingDate, " +
+                        "Bookings.serviceStatus, Bookings.assignedMechanic, Bookings.vehicleID, " +
+                        "Vehicles.registrationNumber, Vehicles.vehicleBrand, Vehicles.vehicleModel, Vehicles.vehicleType " +
+                        "FROM Bookings LEFT JOIN Vehicles ON Bookings.vehicleID = Vehicles.vehicleID " +
+                        "WHERE Bookings.assignedMechanic = ? AND Bookings.serviceStatus = ?",
+                new String[]{mechanicName, status}
         );
     }
 
