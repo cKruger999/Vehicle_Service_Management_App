@@ -38,7 +38,7 @@ public class Login extends AppCompatActivity {
 
                 if (username.isEmpty() || password.isEmpty()) {
                     Toast.makeText(Login.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
-                    return; // Stop the code here if validation fails
+                    return;
                 }
 
                 String authResult = dbHelper.authenticateUser(username, password);
@@ -48,7 +48,7 @@ public class Login extends AppCompatActivity {
                     String userRole = parts[0];
                     String linkedId = parts[1];
                     Toast.makeText(Login.this, "Welcome " + username + " (" + userRole + ")", Toast.LENGTH_SHORT).show();
-
+                    String profileId = dbHelper.getRoleBasedId(username, userRole);
                     Intent intent = null;
 
                     switch (userRole) {

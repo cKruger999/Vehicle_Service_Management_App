@@ -35,6 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
     public String authenticateUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
+        String role = null;
 
         if (username.equals("admin") && password.equals("admin123")) {
             return "Admin:-1";
@@ -97,6 +98,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         cv.put("vehicleModel", model);
         cv.put("registrationNumber", regNumber);
         cv.put("vehicleYear", year);
+        cv.put("vehicleType", type);
         cv.put("customerID", customerId);
 
         long result = db.insert("Vehicles", null, cv);
@@ -106,12 +108,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             return true;
         }
     }
-
-    // =========================================================================================
-    // READ (GET) METHODS
-    // =========================================================================================
-
-    // --- Customers ---
+    public Cursor getCustomerDashboardData(String customerId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT Vehicles.*,Vehicles.vehicleID AS _id, Bookings.serviceStatus FROM Vehicles LEFT JOIN Bookings ON Vehicles.vehicleID = Bookings.vehicleID WHERE Vehicles.customerID = ? ORDER BY Bookings.bookingID DESC", new String[]{customerId});
+    }
     public Cursor getAllCustomers() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM Customers", null);
@@ -228,6 +228,28 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         } else {
             return true;
         }
+    }
+
+    public String getRoleBasedId(String username, String role) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String id = "";
+        Cursor cursor = null;
+
+        if (role.equalsIgnoreCase("Customer")) {
+            cursor = db.rawQuery("SELECT customerID FROM Customers WHERE customerName = ?", new String[]{username});
+            if (cursor.moveToFirst()) {
+                id = cursor.getString(0);
+            }
+        } else if (role.equalsIgnoreCase("Mechanic")) {
+            cursor = db.rawQuery("SELECT mechanicID FROM Mechanics WHERE mechanicName = ?", new String[]{username});
+            if (cursor.moveToFirst()) {
+                id = cursor.getString(0);
+            }
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        return id;
     }
 
 }
