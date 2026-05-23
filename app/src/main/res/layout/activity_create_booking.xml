@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Service Booking"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="25dp"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Vehicle"
+        android:textSize="14sp"
+        android:layout_marginBottom="5dp" />
+
+    <Spinner
+        android:id="@+id/spinnerVehicle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp" />
+
+    <EditText
+        android:id="@+id/etServiceType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Service Type (e.g. Minor Service)"
+        android:inputType="text"
+        android:layout_marginBottom="15dp" />
+
+    <EditText
+        android:id="@+id/etBookingDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Booking Date (e.g. 2026-06-01)"
+        android:inputType="text"
+        android:layout_marginBottom="30dp" />
+
+    <Button
+        android:id="@+id/btnSaveBooking"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Save Booking" />
+
+</LinearLayout>

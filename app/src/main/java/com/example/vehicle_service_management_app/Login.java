@@ -55,6 +55,7 @@ public class Login extends AppCompatActivity {
                         case "Mechanic":
                             intent = new Intent(Login.this, MechanicDash.class);
                             intent.putExtra("MECHANIC_ID", profileId); // Dynamic fallback for mechanic tracking later
+                            intent.putExtra("MECHANIC_NAME", username);
                             break;
                         case "Customer":
                             intent = new Intent(Login.this, CustomerDash.class);

@@ -1,24 +1,61 @@
 package com.example.vehicle_service_management_app;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class MechanicDash extends AppCompatActivity {
+
+    TextView tvMechanicWelcome;
+    Button btnCreateBooking, btnViewBookings, btnUpdateStatus;
+    String mechanicName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_mechanic_dash);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        mechanicName = getIntent().getStringExtra("MECHANIC_NAME");
+        if (mechanicName == null || mechanicName.isEmpty()) {
+            mechanicName = "Mechanic";
+        }
+
+        tvMechanicWelcome = findViewById(R.id.tvMechanicWelcome);
+        btnCreateBooking = findViewById(R.id.btnCreateBooking);
+        btnViewBookings = findViewById(R.id.btnViewBookings);
+        btnUpdateStatus = findViewById(R.id.btnUpdateStatus);
+
+        tvMechanicWelcome.setText("Welcome, " + mechanicName);
+
+        btnCreateBooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MechanicDash.this, CreateBookingActivity.class);
+                intent.putExtra("MECHANIC_NAME", mechanicName);
+                startActivity(intent);
+            }
+        });
+
+        btnViewBookings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MechanicDash.this, ViewBookingsActivity.class);
+                intent.putExtra("MECHANIC_NAME", mechanicName);
+                startActivity(intent);
+            }
+        });
+
+        btnUpdateStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MechanicDash.this, UpdateServiceStatusActivity.class);
+                intent.putExtra("MECHANIC_NAME", mechanicName);
+                startActivity(intent);
+            }
         });
     }
 }

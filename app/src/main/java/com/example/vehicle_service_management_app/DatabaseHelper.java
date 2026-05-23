@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 public class DatabaseHelper extends SQLiteOpenHelper{
 
     private static final String DATABASE_NAME = "mechanic_shop.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 6;
     public String TABLE_USERS = "Users";
     public String COL_USERNAME = "username";
     public String COL_PASSWORD = "password";
@@ -46,8 +46,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL("INSERT INTO Vehicles (vehicleBrand, vehicleModel, registrationNumber, vehicleYear, vehicleType, customerID) VALUES ('Toyota', 'Hilux', 'CA-123456', '2022', 'Truck', 1)");
         db.execSQL("INSERT INTO Vehicles (vehicleBrand, vehicleModel, registrationNumber, vehicleYear, vehicleType, customerID) VALUES ('Honda', 'Civic', 'CY-987654', '2020', 'Sedan', 1)");
 
-        db.execSQL("INSERT INTO Bookings (serviceType, bookingDate, serviceStatus, assignedMechanic, vehicleID) VALUES ('Minor Service', '2026-05-25', 'In Progress', 'Alex Smith', 1)");
-        db.execSQL("INSERT INTO Bookings (serviceType, bookingDate, serviceStatus, assignedMechanic, vehicleID) VALUES ('Brake Replacement', '2026-05-26', 'Pending', 'Alex Smith', 2)");
+        db.execSQL("INSERT INTO " + TABLE_USERS + " (username, password, role) VALUES ('Alan', 'mech123', 'Mechanic')");
+        db.execSQL("INSERT INTO Mechanics (mechanicName, specialization, yearsOfExperience) VALUES ('Alan', 'Engine Repair', '5')");
+        db.execSQL("INSERT INTO Bookings (serviceType, bookingDate, serviceStatus, assignedMechanic, vehicleID) VALUES ('Minor Service', '2026-05-25', 'In Progress', 'Alan', 1)");
+        db.execSQL("INSERT INTO Bookings (serviceType, bookingDate, serviceStatus, assignedMechanic, vehicleID) VALUES ('Brake Replacement', '2026-05-26', 'Pending', 'Alan', 2)");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -173,4 +175,51 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return id;
     }
 
+    public boolean insertBooking(String serviceType, String bookingDate, String serviceStatus, String assignedMechanic, String vehicleId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("serviceType", serviceType);
+        cv.put("bookingDate", bookingDate);
+        cv.put("serviceStatus", serviceStatus);
+        cv.put("assignedMechanic", assignedMechanic);
+        cv.put("vehicleID", vehicleId);
+        long result = db.insert("Bookings", null, cv);
+        return result != -1;
+    }
+
+    public Cursor getBookingsByMechanic(String mechanicName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(
+                "SELECT Bookings.bookingID AS _id, Bookings.serviceType, Bookings.bookingDate, " +
+                        "Bookings.serviceStatus, Bookings.assignedMechanic, Bookings.vehicleID, " +
+                        "Vehicles.registrationNumber FROM Bookings " +
+                        "LEFT JOIN Vehicles ON Bookings.vehicleID = Vehicles.vehicleID " +
+                        "WHERE Bookings.assignedMechanic = ?",
+                new String[]{mechanicName}
+        );
+    }
+
+    public boolean updateBookingStatus(String bookingId, String newStatus) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("serviceStatus", newStatus);
+        long result = db.update("Bookings", cv, "bookingID=?", new String[]{bookingId});
+        return result != -1;
+    }
+
+    public Cursor getAllVehicles() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM Vehicles", null);
+    }
+
+    public String getMechanicNameById(String mechanicId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String name = "";
+        Cursor cursor = db.rawQuery("SELECT mechanicName FROM Mechanics WHERE mechanicID = ?", new String[]{mechanicId});
+        if (cursor.moveToFirst()) {
+            name = cursor.getString(0);
+        }
+        cursor.close();
+        return name;
+    }
 }
