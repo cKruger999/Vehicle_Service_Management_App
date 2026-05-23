@@ -12,10 +12,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     private static final String DATABASE_NAME = "mechanic_shop.db";
     private static final int DATABASE_VERSION = 1;
-    public String TABLE_USERS = "Users";
-    public String COL_USERNAME = "username";
-    public String COL_PASSWORD = "password";
-    public  String COL_ROLE = "role";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -24,21 +20,14 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("CREATE TABLE Customers (customerID INTEGER PRIMARY KEY AUTOINCREMENT, customerName TEXT, customerSurname TEXT, phoneNumber TEXT, emailAddress TEXT)");
+        db.execSQL("CREATE TABLE Customers (customerID INTEGER PRIMARY KEY AUTOINCREMENT, customerName TEXT, customerSurname TEXT, phoneNumber TEXT, emailAddress TEXT, password TEXT)");
 
-        db.execSQL("CREATE TABLE Mechanics (mechanicID INTEGER PRIMARY KEY AUTOINCREMENT, mechanicName TEXT, specialization TEXT, yearsOfExperience TEXT)");
+        db.execSQL("CREATE TABLE Mechanics (mechanicID INTEGER PRIMARY KEY AUTOINCREMENT, mechanicName TEXT, specialization TEXT, yearsOfExperience TEXT, password TEXT)");
 
         db.execSQL("CREATE TABLE Vehicles (vehicleID INTEGER PRIMARY KEY AUTOINCREMENT, vehicleBrand TEXT, vehicleModel TEXT, registrationNumber TEXT, vehicleYear TEXT, customerID INTEGER)");
-        String createUsersTable = "CREATE TABLE " + TABLE_USERS + " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COL_USERNAME + " TEXT, " +
-                COL_PASSWORD + " TEXT, " +
-                COL_ROLE + " TEXT)";
-        db.execSQL(createUsersTable);
-        db.execSQL("INSERT INTO " + TABLE_USERS + " (username, password, role) VALUES ('Phil', 'admin123', 'Admin')");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS Customers");
         db.execSQL("DROP TABLE IF EXISTS Mechanics");
         db.execSQL("DROP TABLE IF EXISTS Vehicles");
@@ -46,27 +35,36 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
     public String authenticateUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String role = null;
 
-        String query = "SELECT " + COL_ROLE + " FROM " + TABLE_USERS +
-                " WHERE " + COL_USERNAME + " = ? AND " + COL_PASSWORD + " = ?";
-
-        Cursor cursor = db.rawQuery(query, new String[]{username, password});
-
-        if (cursor.moveToFirst()) {
-            role = cursor.getString(0);
+        if (username.equals("admin") && password.equals("admin123")) {
+            return "Admin:-1";
         }
+        Cursor custCursor = db.rawQuery("SELECT customerID FROM Customers WHERE customerName = ? AND password = ?", new String[]{username, password});
+        if (custCursor.moveToFirst()) {
+            String id = custCursor.getString(0);
+            custCursor.close();
+            return "Customer:" + id;
+        }
+        custCursor.close();
 
-        cursor.close();
-        return role;
+        Cursor mechCursor = db.rawQuery("SELECT mechanicID FROM Mechanics WHERE mechanicName = ? AND password = ?", new String[]{username, password});
+        if (mechCursor.moveToFirst()) {
+            String id = mechCursor.getString(0);
+            mechCursor.close();
+            return "Mechanic:" + id;
+        }
+        mechCursor.close();
+
+        return null;
     }
-    public boolean insertCustomer(String name, String surname, String phone, String email) {
+    public boolean insertCustomer(String name, String surname, String phone, String email, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("customerName", name);
         cv.put("customerSurname", surname);
         cv.put("phoneNumber", phone);
         cv.put("emailAddress", email);
+        cv.put("password", password);
 
         long result = db.insert("Customers", null, cv);
         if (result == -1) {
@@ -76,12 +74,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
     }
 
-    public boolean insertMechanic(String name, String specialization, String experience) {
+    public boolean insertMechanic(String name, String specialization, String experience, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("mechanicName", name);
         cv.put("specialization", specialization);
         cv.put("yearsOfExperience", experience);
+        cv.put("password", password);
 
         long result = db.insert("Mechanics", null, cv);
         if (result == -1) {

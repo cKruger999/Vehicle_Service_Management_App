@@ -15,7 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class AddMechanicActivity extends AppCompatActivity {
 
-    EditText etMechanicName, etSpecialization, etExperience;
+    EditText etMechanicName, etSpecialization, etExperience, etPassword;
     Button btnSaveMechanic;
     DatabaseHelper myDb;
 
@@ -29,6 +29,7 @@ public class AddMechanicActivity extends AppCompatActivity {
         etMechanicName = findViewById(R.id.etMechanicName);
         etSpecialization = findViewById(R.id.etSpecialization);
         etExperience = findViewById(R.id.etExperience);
+        etPassword = findViewById(R.id.etMechanicPassword);
         btnSaveMechanic = findViewById(R.id.btnSaveMechanic);
 
         btnSaveMechanic.setOnClickListener(new View.OnClickListener() {
@@ -37,16 +38,18 @@ public class AddMechanicActivity extends AppCompatActivity {
                 String name = etMechanicName.getText().toString().trim();
                 String spec = etSpecialization.getText().toString().trim();
                 String exp = etExperience.getText().toString().trim();
+                String password = etPassword.getText().toString().trim();
 
-                if (name.isEmpty() || spec.isEmpty() || exp.isEmpty()) {
+                if (name.isEmpty() || spec.isEmpty() || exp.isEmpty() || password.isEmpty()) {
                     Toast.makeText(AddMechanicActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                 } else {
-                    boolean isInserted = myDb.insertMechanic(name, spec, exp);
+                    boolean isInserted = myDb.insertMechanic(name, spec, exp, password);
                     if (isInserted) {
                         Toast.makeText(AddMechanicActivity.this, "Mechanic Saved!", Toast.LENGTH_SHORT).show();
                         etMechanicName.setText("");
                         etSpecialization.setText("");
                         etExperience.setText("");
+                        etPassword.setText("");
                     } else {
                         Toast.makeText(AddMechanicActivity.this, "Error saving mechanic", Toast.LENGTH_SHORT).show();
                     }

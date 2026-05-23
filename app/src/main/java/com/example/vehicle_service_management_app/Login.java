@@ -22,7 +22,6 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
         editUsername = findViewById(R.id.etUsername);
@@ -42,9 +41,12 @@ public class Login extends AppCompatActivity {
                     return; // Stop the code here if validation fails
                 }
 
-                String userRole = dbHelper.authenticateUser(username, password);
+                String authResult = dbHelper.authenticateUser(username, password);
 
-                if (userRole != null) {
+                if (authResult != null) {
+                    String[] parts = authResult.split(":");
+                    String userRole = parts[0];
+                    String linkedId = parts[1];
                     Toast.makeText(Login.this, "Welcome " + username + " (" + userRole + ")", Toast.LENGTH_SHORT).show();
 
                     Intent intent = null;
@@ -55,9 +57,11 @@ public class Login extends AppCompatActivity {
                             break;
                         case "Mechanic":
                             intent = new Intent(Login.this,MechanicDash.class);
+                            intent.putExtra("LOGGED_IN_MECHANIC_ID", linkedId);
                             break;
                         case "Customer":
                             intent = new Intent(Login.this, CustomerDash.class);
+                            intent.putExtra("LOGGED_IN_CUSTOMER_ID", linkedId);
                             break;
                     }
 

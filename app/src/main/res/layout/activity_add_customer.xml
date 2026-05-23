@@ -11,7 +11,7 @@
         android:text="Add Customer"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="30dp"
         android:layout_gravity="center"/>
 
     <EditText
@@ -44,7 +44,15 @@
         android:layout_height="wrap_content"
         android:hint="Email Address"
         android:inputType="textEmailAddress"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginBottom="15dp"/>
+
+    <EditText
+        android:id="@+id/etCustomerPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Set Password"
+        android:inputType="textPassword"
+        android:layout_marginBottom="15dp"/>
 
     <Button
         android:id="@+id/btnSaveCustomer"

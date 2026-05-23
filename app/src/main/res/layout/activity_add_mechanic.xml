@@ -38,6 +38,14 @@
         android:inputType="number"
         android:layout_marginBottom="30dp"/>
 
+    <EditText
+        android:id="@+id/etMechanicPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Set Password"
+        android:inputType="textPassword"
+        android:layout_marginBottom="30dp"/>
+
     <Button
         android:id="@+id/btnSaveMechanic"
         android:layout_width="match_parent"
