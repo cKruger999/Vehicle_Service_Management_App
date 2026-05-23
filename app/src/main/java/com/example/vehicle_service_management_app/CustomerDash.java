@@ -24,11 +24,12 @@ public class CustomerDash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_dash);
 
+
         myDb = new DatabaseHelper(this);
         lvGarage = findViewById(R.id.lvCustomersGarage);
 
         // Retrieve the logged-in customer's ID from the Login intent bundle
-        customerId = getIntent().getStringExtra("CUSTOMER_ID");
+        customerId = getIntent().getStringExtra("LOGGED_IN_CUSTOMER_ID");
 
         if (customerId == null || customerId.isEmpty()) {
             Toast.makeText(this, "Session Error", Toast.LENGTH_SHORT).show();

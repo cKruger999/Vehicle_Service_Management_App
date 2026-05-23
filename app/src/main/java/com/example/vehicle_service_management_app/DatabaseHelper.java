@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 public class DatabaseHelper extends SQLiteOpenHelper{
 
     private static final String DATABASE_NAME = "mechanic_shop.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 8;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -24,12 +24,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         db.execSQL("CREATE TABLE Mechanics (mechanicID INTEGER PRIMARY KEY AUTOINCREMENT, mechanicName TEXT, specialization TEXT, yearsOfExperience TEXT, password TEXT)");
 
-        db.execSQL("CREATE TABLE Vehicles (vehicleID INTEGER PRIMARY KEY AUTOINCREMENT, vehicleBrand TEXT, vehicleModel TEXT, registrationNumber TEXT, vehicleYear TEXT, customerID INTEGER)");
+        db.execSQL("CREATE TABLE Vehicles (vehicleID INTEGER PRIMARY KEY AUTOINCREMENT, vehicleBrand TEXT, vehicleModel TEXT, registrationNumber TEXT, vehicleYear TEXT, vehicleType TEXT, customerID INTEGER)");
+
+        db.execSQL("CREATE TABLE Bookings (bookingID INTEGER PRIMARY KEY AUTOINCREMENT, serviceType TEXT, bookingDate TEXT, serviceStatus TEXT, assignedMechanic TEXT, vehicleID INTEGER)");
+
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS Customers");
         db.execSQL("DROP TABLE IF EXISTS Mechanics");
+        db.execSQL("DROP TABLE IF EXISTS Bookings");
         db.execSQL("DROP TABLE IF EXISTS Vehicles");
         onCreate(db);
     }
@@ -91,7 +95,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
     }
 
-    public boolean insertVehicle(String brand, String model, String regNumber, String year, String customerId) {
+    public boolean insertVehicle(String brand, String model, String regNumber, String year, String type, String customerId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("vehicleBrand", brand);
