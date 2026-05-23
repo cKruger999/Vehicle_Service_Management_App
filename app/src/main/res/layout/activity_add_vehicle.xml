@@ -73,7 +73,9 @@
     <Button
         android:id="@+id/btnSaveVehicle"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Save Vehicle" />
+        android:layout_height="wrap_content"
+        android:text="Add Vehicle"
+        />
+
 
 </LinearLayout>

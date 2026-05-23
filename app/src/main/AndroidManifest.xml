@@ -12,6 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Vehicle_Service_Management_App">
         <activity
+            android:name=".UpdateCustomerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateVehicleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateMechanicActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewVehiclesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewMechanicsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewRecordsActivity"
             android:exported="false" />
         <activity

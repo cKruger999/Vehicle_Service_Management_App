@@ -41,9 +41,12 @@ public class Login extends AppCompatActivity {
                     return;
                 }
 
-                String userRole = dbHelper.authenticateUser(username, password);
+                String authResult = dbHelper.authenticateUser(username, password);
 
-                if (userRole != null) {
+                if (authResult != null) {
+                    String[] parts = authResult.split(":");
+                    String userRole = parts[0];
+                    String linkedId = parts[1];
                     Toast.makeText(Login.this, "Welcome " + username + " (" + userRole + ")", Toast.LENGTH_SHORT).show();
                     String profileId = dbHelper.getRoleBasedId(username, userRole);
                     Intent intent = null;
@@ -53,12 +56,12 @@ public class Login extends AppCompatActivity {
                             intent = new Intent(Login.this, AdminDash.class);
                             break;
                         case "Mechanic":
-                            intent = new Intent(Login.this, MechanicDash.class);
-                            intent.putExtra("MECHANIC_ID", profileId); // Dynamic fallback for mechanic tracking later
+                            intent = new Intent(Login.this,MechanicDash.class);
+                            intent.putExtra("LOGGED_IN_MECHANIC_ID", linkedId);
                             break;
                         case "Customer":
                             intent = new Intent(Login.this, CustomerDash.class);
-                            intent.putExtra("CUSTOMER_ID", profileId); // Pass dynamic ID straight to customer garage view
+                            intent.putExtra("LOGGED_IN_CUSTOMER_ID", linkedId);
                             break;
                     }
 

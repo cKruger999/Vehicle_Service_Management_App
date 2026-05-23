@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Manage Mechanic"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="15dp"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/tvUpdMechanicId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mechanic ID:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/etUpdMechName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mechanic Name"
+        android:layout_marginBottom="10dp"/>
+
+    <EditText
+        android:id="@+id/etUpdMechSpec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Specialization"
+        android:layout_marginBottom="10dp"/>
+
+    <EditText
+        android:id="@+id/etUpdMechExp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Years of Experience"
+        android:inputType="number"
+        android:layout_marginBottom="30dp"/>
+
+    <Button
+        android:id="@+id/btnUpdateMechanic"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Update Mechanic"
+        android:backgroundTint="#4CAF50"
+        android:layout_marginBottom="15dp"/>
+
+    <Button
+        android:id="@+id/btnDeleteMechanic"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Delete Mechanic"
+        android:backgroundTint="#F44336"/>
+
+</LinearLayout>

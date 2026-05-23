@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Manage Vehicle"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="15dp"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/tvUpdVehicleId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Vehicle ID:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/etUpdVehBrand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Brand"
+        android:layout_marginBottom="10dp"/>
+
+    <EditText
+        android:id="@+id/etUpdVehModel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Model"
+        android:layout_marginBottom="10dp"/>
+
+    <EditText
+        android:id="@+id/etUpdVehReg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Registration Number"
+        android:layout_marginBottom="10dp"/>
+
+    <EditText
+        android:id="@+id/etUpdVehYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Year"
+        android:inputType="number"
+        android:layout_marginBottom="10dp"/>
+
+    <EditText
+        android:id="@+id/etUpdVehCustId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Linked Customer ID"
+        android:inputType="number"
+        android:layout_marginBottom="30dp"/>
+
+    <Button
+        android:id="@+id/btnUpdateVehicle"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Update Vehicle"
+        android:backgroundTint="#4CAF50"
+        android:layout_marginBottom="15dp"/>
+
+    <Button
+        android:id="@+id/btnDeleteVehicle"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Delete Vehicle"
+        android:backgroundTint="#F44336"/>
+
+</LinearLayout>
