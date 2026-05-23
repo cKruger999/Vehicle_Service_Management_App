@@ -1,11 +1,13 @@
 package com.example.vehicle_service_management_app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -38,6 +40,17 @@ public class CustomerDash extends AppCompatActivity {
         }
 
         displayGarageList();
+
+        Button btnUpdateCust = findViewById(R.id.btnUpdateCust);
+
+        btnUpdateCust.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CustomerDash.this, CustomerUpdateDetails.class);
+                intent.putExtra("LOGGED_IN_CUSTOMER_ID", customerId);
+                startActivity(intent);
+            }
+        });
     }
 
     private void displayGarageList() {
