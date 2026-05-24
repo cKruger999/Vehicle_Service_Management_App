@@ -5,76 +5,68 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class AdminDash extends AppCompatActivity {
 
-    Button btnAddCustomer, btnViewCustomers;
-    Button btnAddMechanic, btnViewMechanics;
-    Button btnAddVehicle, btnViewVehicles;
-    Button btnLogout;
+    Button btnAddCustomer, btnAddMechanic, btnAddVehicle, btnLogout;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_dash);
 
+        // Bind the Add and Logout buttons
         btnAddCustomer = findViewById(R.id.btnDashAddCustomer);
-        btnViewCustomers = findViewById(R.id.btnDashViewCustomers);
-
         btnAddMechanic = findViewById(R.id.btnDashAddMechanic);
-        btnViewMechanics = findViewById(R.id.btnDashViewMechanics);
-
         btnAddVehicle = findViewById(R.id.btnDashAddVehicle);
-        btnViewVehicles = findViewById(R.id.btnDashViewVehicles);
-
         btnLogout = findViewById(R.id.btnAdminLogout);
 
-        btnAddCustomer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(AdminDash.this, AddCustomerActivity.class));
-            }
+        // Add Button Click Listeners
+        btnAddCustomer.setOnClickListener(v -> startActivity(new Intent(AdminDash.this, AddCustomerActivity.class)));
+        btnAddMechanic.setOnClickListener(v -> startActivity(new Intent(AdminDash.this, AddMechanicActivity.class)));
+        btnAddVehicle.setOnClickListener(v -> startActivity(new Intent(AdminDash.this, AddVehicleActivity.class)));
+
+        btnLogout.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminDash.this, Login.class);
+            startActivity(intent);
+            finish();
         });
-        btnViewCustomers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
+        // Setup Bottom Navigation
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_home) {
+                // Already on the Home screen, do nothing
+                return true;
+            } else if (itemId == R.id.nav_customers) {
                 startActivity(new Intent(AdminDash.this, ViewRecordsActivity.class));
-            }
-        });
-
-        btnAddMechanic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(AdminDash.this, AddMechanicActivity.class));
-            }
-        });
-        btnViewMechanics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                overridePendingTransition(0, 0); // Removes slide animation for a true tab feel
+                return true;
+            } else if (itemId == R.id.nav_mechanics) {
                 startActivity(new Intent(AdminDash.this, ViewMechanicsActivity.class));
-            }
-        });
-
-        btnAddVehicle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(AdminDash.this, AddVehicleActivity.class));
-            }
-        });
-        btnViewVehicles.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                overridePendingTransition(0, 0);
+                return true;
+            } else if (itemId == R.id.nav_vehicles) {
                 startActivity(new Intent(AdminDash.this, ViewVehiclesActivity.class));
+                overridePendingTransition(0, 0);
+                return true;
             }
+            return false;
         });
+    }
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AdminDash.this, Login.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Ensure "Home" is always highlighted when returning to this dashboard
+        if (bottomNavigationView != null) {
+            bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        }
     }
 }

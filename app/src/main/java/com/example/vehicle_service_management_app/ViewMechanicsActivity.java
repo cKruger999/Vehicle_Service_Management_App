@@ -9,13 +9,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 
 public class ViewMechanicsActivity extends AppCompatActivity {
@@ -24,11 +23,11 @@ public class ViewMechanicsActivity extends AppCompatActivity {
     ListView lvMechanics;
     ArrayList<String> mechanicList;
     ArrayAdapter<String> adapter;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // We can reuse the same layout!
         setContentView(R.layout.activity_view_mechanics);
 
         myDb = new DatabaseHelper(this);
@@ -49,12 +48,42 @@ public class ViewMechanicsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_mechanics);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_home) {
+                startActivity(new Intent(ViewMechanicsActivity.this, AdminDash.class));
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_customers) {
+                startActivity(new Intent(ViewMechanicsActivity.this, ViewRecordsActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_mechanics) {
+                return true;
+            } else if (itemId == R.id.nav_vehicles) {
+                startActivity(new Intent(ViewMechanicsActivity.this, ViewVehiclesActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            }
+            return false;
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         loadData();
+        if (bottomNavigationView != null) {
+            bottomNavigationView.setSelectedItemId(R.id.nav_mechanics);
+        }
     }
 
     private void loadData() {

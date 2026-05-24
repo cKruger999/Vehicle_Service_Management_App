@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 
 public class ViewVehiclesActivity extends AppCompatActivity {
@@ -17,6 +18,7 @@ public class ViewVehiclesActivity extends AppCompatActivity {
     ListView lvVehicles;
     ArrayList<String> vehicleList;
     ArrayAdapter<String> adapter;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +43,42 @@ public class ViewVehiclesActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_vehicles);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_home) {
+                startActivity(new Intent(ViewVehiclesActivity.this, AdminDash.class));
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_customers) {
+                startActivity(new Intent(ViewVehiclesActivity.this, ViewRecordsActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_mechanics) {
+                startActivity(new Intent(ViewVehiclesActivity.this, ViewMechanicsActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_vehicles) {
+                return true;
+            }
+            return false;
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         loadData();
+        if (bottomNavigationView != null) {
+            bottomNavigationView.setSelectedItemId(R.id.nav_vehicles);
+        }
     }
 
     private void loadData() {
