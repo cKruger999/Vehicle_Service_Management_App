@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 public class DatabaseHelper extends SQLiteOpenHelper{
 
     private static final String DATABASE_NAME = "mechanic_shop.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 10;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -25,6 +25,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL("CREATE TABLE Mechanics (mechanicID INTEGER PRIMARY KEY AUTOINCREMENT, mechanicName TEXT, specialization TEXT, yearsOfExperience TEXT, password TEXT)");
 
         db.execSQL("CREATE TABLE Vehicles (vehicleID INTEGER PRIMARY KEY AUTOINCREMENT, vehicleBrand TEXT, vehicleModel TEXT, registrationNumber TEXT, vehicleYear TEXT, vehicleType TEXT, customerID INTEGER)");
+
+        db.execSQL("CREATE TABLE Bookings (bookingID INTEGER PRIMARY KEY AUTOINCREMENT, serviceType TEXT, bookingDate TEXT, serviceStatus TEXT, assignedMechanic TEXT, vehicleID INTEGER)");
 
 
     }
@@ -140,6 +142,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public Cursor getAllVehicles() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM Vehicles", null);
+    }
+    public Cursor getCustomerVehiclesOnly(String customerId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT *, vehicleID AS _id FROM Vehicles WHERE customerID = ?", new String[]{customerId});
     }
 
     public Cursor getVehicleById(String id) {
