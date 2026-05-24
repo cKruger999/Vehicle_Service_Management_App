@@ -26,7 +26,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         db.execSQL("CREATE TABLE Vehicles (vehicleID INTEGER PRIMARY KEY AUTOINCREMENT, vehicleBrand TEXT, vehicleModel TEXT, registrationNumber TEXT, vehicleYear TEXT, vehicleType TEXT, customerID INTEGER)");
 
-        db.execSQL("CREATE TABLE Bookings (bookingID INTEGER PRIMARY KEY AUTOINCREMENT, serviceType TEXT, bookingDate TEXT, serviceStatus TEXT, assignedMechanic TEXT, vehicleID INTEGER)");
 
     }
     @Override
@@ -256,4 +255,58 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return id;
     }
 
+    public boolean insertBooking(String serviceType, String bookingDate, String serviceStatus, String assignedMechanic, String vehicleId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("serviceType", serviceType);
+        cv.put("bookingDate", bookingDate);
+        cv.put("serviceStatus", serviceStatus);
+        cv.put("assignedMechanic", assignedMechanic);
+        cv.put("vehicleID", vehicleId);
+        long result = db.insert("Bookings", null, cv);
+        return result != -1;
+    }
+
+    public Cursor getBookingsByMechanic(String mechanicName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(
+                "SELECT Bookings.bookingID AS _id, Bookings.serviceType, Bookings.bookingDate, " +
+                        "Bookings.serviceStatus, Bookings.assignedMechanic, Bookings.vehicleID, " +
+                        "Vehicles.registrationNumber, Vehicles.vehicleBrand, Vehicles.vehicleModel, Vehicles.vehicleType " +
+                        "FROM Bookings LEFT JOIN Vehicles ON Bookings.vehicleID = Vehicles.vehicleID " +
+                        "WHERE Bookings.assignedMechanic = ?",
+                new String[]{mechanicName}
+        );
+    }
+
+    public Cursor getBookingsByMechanicAndStatus(String mechanicName, String status) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(
+                "SELECT Bookings.bookingID AS _id, Bookings.serviceType, Bookings.bookingDate, " +
+                        "Bookings.serviceStatus, Bookings.assignedMechanic, Bookings.vehicleID, " +
+                        "Vehicles.registrationNumber, Vehicles.vehicleBrand, Vehicles.vehicleModel, Vehicles.vehicleType " +
+                        "FROM Bookings LEFT JOIN Vehicles ON Bookings.vehicleID = Vehicles.vehicleID " +
+                        "WHERE Bookings.assignedMechanic = ? AND Bookings.serviceStatus = ?",
+                new String[]{mechanicName, status}
+        );
+    }
+
+    public boolean updateBookingStatus(String bookingId, String newStatus) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("serviceStatus", newStatus);
+        long result = db.update("Bookings", cv, "bookingID=?", new String[]{bookingId});
+        return result != -1;
+    }
+
+    public String getMechanicNameById(String mechanicId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String name = "";
+        Cursor cursor = db.rawQuery("SELECT mechanicName FROM Mechanics WHERE mechanicID = ?", new String[]{mechanicId});
+        if (cursor.moveToFirst()) {
+            name = cursor.getString(0);
+        }
+        cursor.close();
+        return name;
+    }
 }

@@ -51,6 +51,15 @@
             android:name=".MechanicDash"
             android:exported="false" />
         <activity
+            android:name=".CreateBookingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewBookingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateServiceStatusActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminDash"
             android:exported="false" />
         <activity
