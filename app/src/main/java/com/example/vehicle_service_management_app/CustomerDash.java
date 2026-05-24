@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class CustomerDash extends AppCompatActivity {
 
-    String myCustomerId;
+    String myCustomerId, username;
     TextView tvWelcome;
     Button btnVehicles, btnBookings, btnProfile, btnLogout;
 
@@ -52,8 +52,11 @@ public class CustomerDash extends AppCompatActivity {
         btnBookings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Create a 'MyBookingsActivity'
                 Toast.makeText(CustomerDash.this, "Opening Bookings...", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(CustomerDash.this, ViewServiceBookings.class);
+                intent.putExtra("LOGGED_IN_CUSTOMER_ID", myCustomerId);
+                intent.putExtra("MECHANIC_NAME", username);
+                startActivity(intent);
             }
         });
 

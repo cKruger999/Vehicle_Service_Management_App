@@ -113,7 +113,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
     public Cursor getCustomerDashboardData(String customerId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT Vehicles.*,Vehicles.vehicleID AS _id, Bookings.serviceStatus FROM Vehicles LEFT JOIN Bookings ON Vehicles.vehicleID = Bookings.vehicleID WHERE Vehicles.customerID = ? ORDER BY Bookings.bookingID DESC", new String[]{customerId});
+        // Added Bookings.bookingDate and Bookings.assignedMechanic to the SELECT query
+        return db.rawQuery("SELECT Vehicles.*, Vehicles.vehicleID AS _id, Bookings.serviceStatus, Bookings.bookingDate, Bookings.assignedMechanic FROM Vehicles LEFT JOIN Bookings ON Vehicles.vehicleID = Bookings.vehicleID WHERE Vehicles.customerID = ? ORDER BY Bookings.bookingID DESC", new String[]{customerId});
     }
     public Cursor getAllCustomers() {
         SQLiteDatabase db = this.getReadableDatabase();
