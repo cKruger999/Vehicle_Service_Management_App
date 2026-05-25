@@ -17,12 +17,20 @@
             android:text="Mechanic Dashboard"
             android:textSize="26sp"
             android:textStyle="bold"
-            android:layout_marginBottom="40dp" />
+            android:layout_marginBottom="100dp" />
+
+        <ImageView
+            android:id="@+id/ivMechanicLogo"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/wrench_icon" />
 
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="65dp"
             android:text="Log Out"
             android:backgroundTint="#F44336" />
 

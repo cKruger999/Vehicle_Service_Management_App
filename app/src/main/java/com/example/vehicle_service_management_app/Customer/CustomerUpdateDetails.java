@@ -68,7 +68,6 @@ public class CustomerUpdateDetails extends AppCompatActivity {
 
                     if (isUpdated) {
                         Toast.makeText(CustomerUpdateDetails.this, "Customer Updated Successfully!", Toast.LENGTH_SHORT).show();
-                        finish();
                     } else {
                         Toast.makeText(CustomerUpdateDetails.this, "Error Updating", Toast.LENGTH_SHORT).show();
                     }

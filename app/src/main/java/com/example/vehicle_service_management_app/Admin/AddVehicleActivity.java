@@ -23,7 +23,7 @@ public class AddVehicleActivity extends AppCompatActivity {
     EditText etBrand, etModel, etRegNumber, etYear;
     AutoCompleteTextView actvCustomer;
     Spinner spnVehicleType;
-    Button btnSaveVehicle;
+    Button btnSaveVehicle, btnBack;
     DatabaseHelper myDb;
     List<String> customerIdList;
     List<String> customerLabelList;
@@ -42,6 +42,7 @@ public class AddVehicleActivity extends AppCompatActivity {
         actvCustomer   = findViewById(R.id.actvCustomer);
         spnVehicleType = findViewById(R.id.spnVehicleType);
         btnSaveVehicle = findViewById(R.id.btnSaveVehicle);
+        btnBack = findViewById(R.id.btnBack);
 
         String[] vehicleTypes = {"Sedan", "Truck", "Motorcycle"};
         ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, vehicleTypes);
@@ -49,6 +50,13 @@ public class AddVehicleActivity extends AppCompatActivity {
         spnVehicleType.setAdapter(typeAdapter);
 
         loadCustomersIntoDropdown();
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         btnSaveVehicle.setOnClickListener(new View.OnClickListener() {
             @Override

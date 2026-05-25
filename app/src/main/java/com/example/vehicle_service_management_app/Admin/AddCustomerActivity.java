@@ -14,7 +14,7 @@ import com.example.vehicle_service_management_app.R;
 public class AddCustomerActivity extends AppCompatActivity {
 
     EditText etCustomerName, etCustomerSurname, etPhoneNumber, etEmail, etPassword;
-    Button btnSaveCustomer;
+    Button btnSaveCustomer, btnBack;
     DatabaseHelper myDb;
 
     @Override
@@ -30,6 +30,15 @@ public class AddCustomerActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etCustomerPassword);
         btnSaveCustomer = findViewById(R.id.btnSaveCustomer);
+        btnBack = findViewById(R.id.btnBack);
+
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         btnSaveCustomer.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -14,7 +14,7 @@ import com.example.vehicle_service_management_app.R;
 public class AddMechanicActivity extends AppCompatActivity {
 
     EditText etMechanicName, etSpecialization, etExperience, etPassword;
-    Button btnSaveMechanic;
+    Button btnSaveMechanic, btnBack;
     DatabaseHelper myDb;
 
     @Override
@@ -29,6 +29,7 @@ public class AddMechanicActivity extends AppCompatActivity {
         etExperience = findViewById(R.id.etExperience);
         etPassword = findViewById(R.id.etMechanicPassword);
         btnSaveMechanic = findViewById(R.id.btnSaveMechanic);
+        btnBack = findViewById(R.id.btnBack);
 
         btnSaveMechanic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +53,12 @@ public class AddMechanicActivity extends AppCompatActivity {
                         Toast.makeText(AddMechanicActivity.this, "Error saving mechanic", Toast.LENGTH_SHORT).show();
                     }
                 }
+            }
+        });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
