@@ -1,6 +1,5 @@
 package com.example.vehicle_service_management_app;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,11 +7,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.example.vehicle_service_management_app.Admin.AdminDash;
+import com.example.vehicle_service_management_app.Customer.CustomerDash;
+import com.example.vehicle_service_management_app.Mechanic.MechanicDash;
 
 public class Login extends AppCompatActivity {
 
@@ -56,7 +55,7 @@ public class Login extends AppCompatActivity {
                             intent = new Intent(Login.this, AdminDash.class);
                             break;
                         case "Mechanic":
-                            intent = new Intent(Login.this,MechanicDash.class);
+                            intent = new Intent(Login.this, MechanicDash.class);
                             intent.putExtra("LOGGED_IN_MECHANIC_ID", linkedId);
                             intent.putExtra("MECHANIC_NAME", username);
                             break;

@@ -1,4 +1,4 @@
-package com.example.vehicle_service_management_app;
+package com.example.vehicle_service_management_app.Admin;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,63 +9,65 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.vehicle_service_management_app.DatabaseHelper;
+import com.example.vehicle_service_management_app.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 
-public class ViewVehiclesActivity extends AppCompatActivity {
+public class ViewRecordsActivity extends AppCompatActivity {
 
     DatabaseHelper myDb;
-    ListView lvVehicles;
-    ArrayList<String> vehicleList;
+    ListView lvCustomers;
+    ArrayList<String> customerList;
     ArrayAdapter<String> adapter;
     BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_vehicles);
+        setContentView(R.layout.activity_view_records);
 
         myDb = new DatabaseHelper(this);
-        lvVehicles = findViewById(R.id.lvVehicles);
-        vehicleList = new ArrayList<>();
+        lvCustomers = findViewById(R.id.lvCustomers);
+        customerList = new ArrayList<>();
 
         loadData();
 
-        lvVehicles.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvCustomers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = vehicleList.get(position);
-                String[] parts = selectedItem.split(" - ");
-                String vehicleId = parts[0].replace("ID: ", "");
+                String selectedItem = customerList.get(position);
+                String customerId = selectedItem.split(":")[0];
 
-                Intent intent = new Intent(ViewVehiclesActivity.this, UpdateVehicleActivity.class);
-                intent.putExtra("VEHICLE_ID", vehicleId);
+                Intent intent = new Intent(ViewRecordsActivity.this, UpdateCustomerActivity.class);
+                intent.putExtra("CUSTOMER_ID", customerId);
                 startActivity(intent);
             }
         });
 
         bottomNavigationView = findViewById(R.id.bottomNavigation);
-        bottomNavigationView.setSelectedItemId(R.id.nav_vehicles);
+        bottomNavigationView.setSelectedItemId(R.id.nav_customers);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
             if (itemId == R.id.nav_home) {
-                startActivity(new Intent(ViewVehiclesActivity.this, AdminDash.class));
+                startActivity(new Intent(ViewRecordsActivity.this, AdminDash.class));
                 overridePendingTransition(0, 0);
                 finish();
                 return true;
             } else if (itemId == R.id.nav_customers) {
-                startActivity(new Intent(ViewVehiclesActivity.this, ViewRecordsActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
                 return true;
             } else if (itemId == R.id.nav_mechanics) {
-                startActivity(new Intent(ViewVehiclesActivity.this, ViewMechanicsActivity.class));
+                startActivity(new Intent(ViewRecordsActivity.this, ViewMechanicsActivity.class));
                 overridePendingTransition(0, 0);
                 finish();
                 return true;
             } else if (itemId == R.id.nav_vehicles) {
+                startActivity(new Intent(ViewRecordsActivity.this, ViewVehiclesActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
                 return true;
             }
             return false;
@@ -77,24 +79,24 @@ public class ViewVehiclesActivity extends AppCompatActivity {
         super.onResume();
         loadData();
         if (bottomNavigationView != null) {
-            bottomNavigationView.setSelectedItemId(R.id.nav_vehicles);
+            bottomNavigationView.setSelectedItemId(R.id.nav_customers);
         }
     }
 
     private void loadData() {
-        vehicleList.clear();
-        Cursor cursor = myDb.getAllVehicles();
+        customerList.clear();
+        Cursor cursor = myDb.getAllCustomers();
 
         if (cursor.getCount() == 0) {
-            Toast.makeText(this, "No vehicles found.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No customers found.", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
-                String details = "ID: " + cursor.getString(0) + " - " + cursor.getString(1) + " " + cursor.getString(2) + " (" + cursor.getString(3) + ")";
-                vehicleList.add(details);
+                String details = cursor.getString(0) + ": " + cursor.getString(1) + " " + cursor.getString(2);
+                customerList.add(details);
             }
         }
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, vehicleList);
-        lvVehicles.setAdapter(adapter);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, customerList);
+        lvCustomers.setAdapter(adapter);
     }
 }

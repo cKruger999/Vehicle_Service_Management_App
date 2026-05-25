@@ -1,4 +1,4 @@
-package com.example.vehicle_service_management_app;
+package com.example.vehicle_service_management_app.Customer;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -15,11 +14,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.vehicle_service_management_app.DatabaseHelper;
+import com.example.vehicle_service_management_app.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class ViewServiceBookings extends AppCompatActivity {
 
     ListView lvGarage;
     DatabaseHelper myDb;
-    String customerId;
+    String customerId, username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,43 @@ public class ViewServiceBookings extends AppCompatActivity {
         }
 
         displayGarageList();
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
+        bottomNav.setSelectedItemId(R.id.nav_bookings);
+
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_home) {
+                Intent intent = new Intent(ViewServiceBookings.this, CustomerDash.class);
+                intent.putExtra("LOGGED_IN_CUSTOMER_ID", customerId); // Ensure variable name matches!
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+
+            } else if (id == R.id.nav_vehicles) {
+                Intent intent = new Intent(ViewServiceBookings.this, CustomerViewVehicle.class);
+                intent.putExtra("LOGGED_IN_CUSTOMER_ID", customerId);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+
+            } else if (id == R.id.nav_bookings) {
+                return true;
+
+            } else if (id == R.id.nav_profile) {
+                Intent intent = new Intent(ViewServiceBookings.this, CustomerUpdateDetails.class);
+                intent.putExtra("LOGGED_IN_CUSTOMER_ID", customerId);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+            }
+            return false;
+        });
+
 
     }
 

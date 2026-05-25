@@ -1,4 +1,4 @@
-package com.example.vehicle_service_management_app;
+package com.example.vehicle_service_management_app.Admin;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.vehicle_service_management_app.DatabaseHelper;
+import com.example.vehicle_service_management_app.R;
 
 public class UpdateVehicleActivity extends AppCompatActivity {
 

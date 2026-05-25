@@ -1,6 +1,5 @@
-package com.example.vehicle_service_management_app;
+package com.example.vehicle_service_management_app.Admin;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -9,11 +8,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import androidx.activity.EdgeToEdge;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.example.vehicle_service_management_app.DatabaseHelper;
+import com.example.vehicle_service_management_app.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 

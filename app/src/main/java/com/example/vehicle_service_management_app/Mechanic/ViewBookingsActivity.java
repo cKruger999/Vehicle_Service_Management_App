@@ -1,6 +1,7 @@
-package com.example.vehicle_service_management_app;
+package com.example.vehicle_service_management_app.Mechanic;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +15,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.vehicle_service_management_app.DatabaseHelper;
+import com.example.vehicle_service_management_app.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 public class ViewBookingsActivity extends AppCompatActivity {
@@ -53,6 +57,42 @@ public class ViewBookingsActivity extends AppCompatActivity {
         });
 
         loadBookings(TAB_FILTERS[0]);
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
+        bottomNav.setSelectedItemId(R.id.nav_mechanic_bookings);
+
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_mechanic_home) {
+                Intent intent = new Intent(getApplicationContext(), CreateBookingActivity.class);
+                intent.putExtra("MECHANIC_NAME", mechanicName);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                finish();
+                return true;
+
+            } else if (id == R.id.nav_mechanic_create) {
+                Intent intent = new Intent(getApplicationContext(), CreateBookingActivity.class);
+                intent.putExtra("MECHANIC_NAME", mechanicName);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                finish();
+                return true;
+
+            } else if (id == R.id.nav_mechanic_bookings) {
+                return true;
+
+            } else if (id == R.id.nav_mechanic_update) {
+                Intent intent = new Intent(getApplicationContext(), UpdateServiceStatusActivity.class);
+                intent.putExtra("MECHANIC_NAME", mechanicName);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                finish();
+                return true;
+            }
+            return false;
+        });
     }
 
     @Override

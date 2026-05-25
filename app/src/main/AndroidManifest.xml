@@ -11,62 +11,64 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Vehicle_Service_Management_App" >
+
         <activity
-            android:name=".CustomerViewVehicle"
+            android:name=".Customer.CustomerViewVehicle"
+            android:parentActivityName=".Customer.CustomerDash"
             android:exported="false" />
         <activity
-            android:name=".CustomerUpdateDetails"
+            android:name=".Customer.CustomerUpdateDetails"
             android:exported="false" />
         <activity
-            android:name=".UpdateCustomerActivity"
+            android:name=".Admin.UpdateCustomerActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateVehicleActivity"
+            android:name=".Admin.UpdateVehicleActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateMechanicActivity"
+            android:name=".Admin.UpdateMechanicActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewVehiclesActivity"
+            android:name=".Admin.ViewVehiclesActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewMechanicsActivity"
+            android:name=".Admin.ViewMechanicsActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewRecordsActivity"
+            android:name=".Admin.ViewRecordsActivity"
             android:exported="false" />
         <activity
-            android:name=".AddMechanicActivity"
+            android:name=".Admin.AddMechanicActivity"
             android:exported="false" />
         <activity
-            android:name=".AddVehicleActivity"
+            android:name=".Admin.AddVehicleActivity"
             android:exported="false" />
         <activity
-            android:name=".AddCustomerActivity"
+            android:name=".Admin.AddCustomerActivity"
             android:exported="false" />
         <activity
             android:name=".Login"
             android:exported="false" />
         <activity
-            android:name=".CustomerDash"
+            android:name=".Customer.CustomerDash"
             android:exported="false" />
         <activity
-            android:name=".MechanicDash"
+            android:name=".Mechanic.MechanicDash"
             android:exported="false" />
         <activity
-            android:name=".CreateBookingActivity"
+            android:name=".Mechanic.CreateBookingActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewBookingsActivity"
+            android:name=".Mechanic.ViewBookingsActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateServiceStatusActivity"
+            android:name=".Mechanic.UpdateServiceStatusActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminDash"
+            android:name=".Admin.AdminDash"
             android:exported="false" />
         <activity
-            android:name=".ViewServiceBookings"
+            android:name=".Customer.ViewServiceBookings"
             android:exported="false"
             />
         <activity

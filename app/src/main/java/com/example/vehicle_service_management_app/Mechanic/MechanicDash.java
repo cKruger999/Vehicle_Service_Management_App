@@ -1,4 +1,4 @@
-package com.example.vehicle_service_management_app;
+package com.example.vehicle_service_management_app.Mechanic;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,10 +8,14 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.vehicle_service_management_app.Login;
+import com.example.vehicle_service_management_app.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class MechanicDash extends AppCompatActivity {
 
     TextView tvMechanicWelcome;
-    Button btnCreateBooking, btnViewBookings, btnUpdateStatus, btnLogout;
+    Button btnLogout;
     String mechanicName;
 
     @Override
@@ -25,38 +29,44 @@ public class MechanicDash extends AppCompatActivity {
         }
 
         tvMechanicWelcome = findViewById(R.id.tvMechanicWelcome);
-        btnCreateBooking  = findViewById(R.id.btnCreateBooking);
-        btnViewBookings   = findViewById(R.id.btnViewBookings);
-        btnUpdateStatus   = findViewById(R.id.btnUpdateStatus);
         btnLogout         = findViewById(R.id.btnLogout);
 
         tvMechanicWelcome.setText("Welcome, " + mechanicName);
 
-        btnCreateBooking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MechanicDash.this, CreateBookingActivity.class);
-                intent.putExtra("MECHANIC_NAME", mechanicName);
-                startActivity(intent);
-            }
-        });
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
+        bottomNav.setSelectedItemId(R.id.nav_mechanic_home);
 
-        btnViewBookings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MechanicDash.this, ViewBookingsActivity.class);
-                intent.putExtra("MECHANIC_NAME", mechanicName);
-                startActivity(intent);
-            }
-        });
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
 
-        btnUpdateStatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MechanicDash.this, UpdateServiceStatusActivity.class);
+            if (id == R.id.nav_mechanic_home) {
+                return true;
+
+            } else if (id == R.id.nav_mechanic_create) {
+                Intent intent = new Intent(getApplicationContext(), CreateBookingActivity.class);
                 intent.putExtra("MECHANIC_NAME", mechanicName);
                 startActivity(intent);
+                overridePendingTransition(0,0);
+                finish();
+                return true;
+
+            } else if (id == R.id.nav_mechanic_bookings) {
+                Intent intent = new Intent(getApplicationContext(), ViewBookingsActivity.class);
+                intent.putExtra("MECHANIC_NAME", mechanicName);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                finish();
+                return true;
+
+            } else if (id == R.id.nav_mechanic_update) {
+                Intent intent = new Intent(getApplicationContext(), UpdateServiceStatusActivity.class);
+                intent.putExtra("MECHANIC_NAME", mechanicName);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                finish();
+                return true;
             }
+            return false;
         });
 
         btnLogout.setOnClickListener(new View.OnClickListener() {

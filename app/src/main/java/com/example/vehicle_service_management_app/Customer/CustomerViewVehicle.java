@@ -1,4 +1,4 @@
-package com.example.vehicle_service_management_app;
+package com.example.vehicle_service_management_app.Customer;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.vehicle_service_management_app.DatabaseHelper;
+import com.example.vehicle_service_management_app.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class CustomerViewVehicle extends AppCompatActivity {
 
@@ -37,6 +41,41 @@ public class CustomerViewVehicle extends AppCompatActivity {
         }
 
         displayGarageList();
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
+        bottomNav.setSelectedItemId(R.id.nav_vehicles);
+
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_home) {
+                Intent intent = new Intent(getApplicationContext(), CustomerDash.class);
+                intent.putExtra("LOGGED_IN_CUSTOMER_ID", customerId); // Ensure variable name matches!
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+
+            } else if (id == R.id.nav_vehicles) {
+                return true;
+            } else if (id == R.id.nav_bookings) {
+                Intent intent = new Intent(getApplicationContext(), ViewServiceBookings.class);
+                intent.putExtra("LOGGED_IN_CUSTOMER_ID", customerId);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+                finish();
+                return true;
+
+            } else if (id == R.id.nav_profile) {
+                Intent intent = new Intent(getApplicationContext(), CustomerUpdateDetails.class);
+                intent.putExtra("LOGGED_IN_CUSTOMER_ID", customerId);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                finish();
+                return true;
+            }
+            return false;
+        });
     }
 
     private void displayGarageList() {

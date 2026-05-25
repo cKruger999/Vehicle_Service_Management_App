@@ -1,6 +1,7 @@
-package com.example.vehicle_service_management_app;
+package com.example.vehicle_service_management_app.Mechanic;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.vehicle_service_management_app.DatabaseHelper;
+import com.example.vehicle_service_management_app.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,6 +46,42 @@ public class CreateBookingActivity extends AppCompatActivity {
 
         setupDatePicker();
         loadVehiclesIntoDropdown();
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
+        bottomNav.setSelectedItemId(R.id.nav_mechanic_create);
+
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_mechanic_home) {
+                Intent intent = new Intent(getApplicationContext(), MechanicDash.class);
+                intent.putExtra("MECHANIC_NAME", mechanicName);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                finish();
+                return true;
+
+            } else if (id == R.id.nav_mechanic_create) {
+                return true;
+
+            } else if (id == R.id.nav_mechanic_bookings) {
+                Intent intent = new Intent(getApplicationContext(), ViewBookingsActivity.class);
+                intent.putExtra("MECHANIC_NAME", mechanicName);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                finish();
+                return true;
+
+            } else if (id == R.id.nav_mechanic_update) {
+                Intent intent = new Intent(getApplicationContext(), UpdateServiceStatusActivity.class);
+                intent.putExtra("MECHANIC_NAME", mechanicName);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                finish();
+                return true;
+            }
+            return false;
+        });
 
         btnSaveBooking.setOnClickListener(new View.OnClickListener() {
             @Override
