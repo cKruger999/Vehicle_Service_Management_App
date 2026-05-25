@@ -24,7 +24,7 @@ public class UpdateCustomerActivity extends AppCompatActivity {
     TextView tvId;
     EditText etName, etSurname, etPhone, etEmail;
 
-    Button btnUpdate, btnDelete;
+    Button btnUpdate, btnDelete, btnBack;
 
     DatabaseHelper myDb;
 
@@ -44,18 +44,13 @@ public class UpdateCustomerActivity extends AppCompatActivity {
 
 
         tvId = findViewById(R.id.tvUpdCustomerId);
-
         etName = findViewById(R.id.etUpdCustomerName);
-
         etSurname = findViewById(R.id.etUpdCustomerSurname);
-
         etPhone = findViewById(R.id.etUpdPhoneNumber);
-
         etEmail = findViewById(R.id.etUpdEmail);
-
         btnUpdate = findViewById(R.id.btnUpdateCustomer);
-
         btnDelete = findViewById(R.id.btnDeleteCustomer);
+        btnBack = findViewById(R.id.btnBack);
 
 
         if (getIntent().hasExtra("CUSTOMER_ID")) {
@@ -149,6 +144,12 @@ public class UpdateCustomerActivity extends AppCompatActivity {
 
             }
 
+        });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
         });
 
     }

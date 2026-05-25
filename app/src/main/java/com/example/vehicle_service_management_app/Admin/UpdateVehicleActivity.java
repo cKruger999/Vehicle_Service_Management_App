@@ -16,7 +16,7 @@ public class UpdateVehicleActivity extends AppCompatActivity {
 
     TextView tvId;
     EditText etBrand, etModel, etReg, etYear, etCustId;
-    Button btnUpdate, btnDelete;
+    Button btnUpdate, btnDelete, btnBack;
     DatabaseHelper myDb;
     String vehicleId;
 
@@ -35,6 +35,7 @@ public class UpdateVehicleActivity extends AppCompatActivity {
         etCustId = findViewById(R.id.etUpdVehCustId);
         btnUpdate = findViewById(R.id.btnUpdateVehicle);
         btnDelete = findViewById(R.id.btnDeleteVehicle);
+        btnBack = findViewById(R.id.btnBack);
 
         if (getIntent().hasExtra("VEHICLE_ID")) {
             vehicleId = getIntent().getStringExtra("VEHICLE_ID");
@@ -85,6 +86,12 @@ public class UpdateVehicleActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(UpdateVehicleActivity.this, "Error Deleting", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

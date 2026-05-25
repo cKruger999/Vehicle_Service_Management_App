@@ -16,7 +16,7 @@ public class UpdateMechanicActivity extends AppCompatActivity {
 
     TextView tvId;
     EditText etName, etSpec, etExp;
-    Button btnUpdate, btnDelete;
+    Button btnUpdate, btnDelete, btnBack;
     DatabaseHelper myDb;
     String mechanicId;
 
@@ -33,6 +33,7 @@ public class UpdateMechanicActivity extends AppCompatActivity {
         etExp = findViewById(R.id.etUpdMechExp);
         btnUpdate = findViewById(R.id.btnUpdateMechanic);
         btnDelete = findViewById(R.id.btnDeleteMechanic);
+        btnBack = findViewById(R.id.btnBack);
 
         // ====================================================================
         // AUTO-POPULATE LOGIC
@@ -87,6 +88,13 @@ public class UpdateMechanicActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(UpdateMechanicActivity.this, "Error Deleting", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

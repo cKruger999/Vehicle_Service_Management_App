@@ -67,6 +67,13 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="Delete Customer"
-        android:backgroundTint="#F44336"/>
+        android:backgroundTint="#F44336"
+        android:layout_marginBottom="15dp"/>
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Cancel"
+        android:backgroundTint="#808080"/>
 
 </LinearLayout>
