@@ -35,16 +35,11 @@ public class UpdateMechanicActivity extends AppCompatActivity {
         btnDelete = findViewById(R.id.btnDeleteMechanic);
         btnBack = findViewById(R.id.btnBack);
 
-        // ====================================================================
-        // AUTO-POPULATE LOGIC
-        // ====================================================================
         if (getIntent().hasExtra("MECHANIC_ID")) {
             mechanicId = getIntent().getStringExtra("MECHANIC_ID");
 
-            // Ask the database for this specific mechanic
             Cursor cursor = myDb.getMechanicById(mechanicId);
 
-            // Type the data into the screen boxes
             if (cursor.moveToFirst()) {
                 tvId.setText("Mechanic ID: " + cursor.getString(0));
                 etName.setText(cursor.getString(1));
@@ -53,9 +48,7 @@ public class UpdateMechanicActivity extends AppCompatActivity {
             }
             cursor.close();
         }
-        // ====================================================================
 
-        // The Update Button Logic
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +62,7 @@ public class UpdateMechanicActivity extends AppCompatActivity {
                     boolean isUpdated = myDb.updateMechanic(mechanicId, name, spec, exp);
                     if (isUpdated) {
                         Toast.makeText(UpdateMechanicActivity.this, "Mechanic Updated Successfully!", Toast.LENGTH_SHORT).show();
-                        finish(); // Closes the screen and returns to the list
+                        finish();
                     } else {
                         Toast.makeText(UpdateMechanicActivity.this, "Error Updating", Toast.LENGTH_SHORT).show();
                     }
@@ -77,14 +70,13 @@ public class UpdateMechanicActivity extends AppCompatActivity {
             }
         });
 
-        // The Delete Button Logic
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean isDeleted = myDb.deleteMechanic(mechanicId);
                 if (isDeleted) {
                     Toast.makeText(UpdateMechanicActivity.this, "Mechanic Deleted Successfully!", Toast.LENGTH_SHORT).show();
-                    finish(); // Closes the screen and returns to the list
+                    finish();
                 } else {
                     Toast.makeText(UpdateMechanicActivity.this, "Error Deleting", Toast.LENGTH_SHORT).show();
                 }

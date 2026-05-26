@@ -83,7 +83,7 @@ public class CustomerUpdateDetails extends AppCompatActivity {
 
             if (id == R.id.nav_home) {
                 Intent intent = new Intent(CustomerUpdateDetails.this, CustomerDash.class);
-                intent.putExtra("LOGGED_IN_CUSTOMER_ID", customerId); // Ensure variable name matches!
+                intent.putExtra("LOGGED_IN_CUSTOMER_ID", customerId);
                 startActivity(intent);
                 finish();
                 overridePendingTransition(0, 0);

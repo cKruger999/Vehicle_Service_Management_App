@@ -44,7 +44,6 @@ public class AdminDash extends AppCompatActivity {
             int itemId = item.getItemId();
 
             if (itemId == R.id.nav_home) {
-                // Already on the Home screen, do nothing
                 return true;
             } else if (itemId == R.id.nav_customers) {
                 startActivity(new Intent(AdminDash.this, ViewRecordsActivity.class));
@@ -66,7 +65,6 @@ public class AdminDash extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Ensure "Home" is always highlighted when returning to this dashboard
         if (bottomNavigationView != null) {
             bottomNavigationView.setSelectedItemId(R.id.nav_home);
         }

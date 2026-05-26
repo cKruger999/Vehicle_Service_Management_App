@@ -23,23 +23,16 @@ public class UpdateCustomerActivity extends AppCompatActivity {
 
     TextView tvId;
     EditText etName, etSurname, etPhone, etEmail;
-
     Button btnUpdate, btnDelete, btnBack;
-
     DatabaseHelper myDb;
-
     String customerId;
-
 
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_update_customer);
-
-
         myDb = new DatabaseHelper(this);
 
 
@@ -56,27 +49,16 @@ public class UpdateCustomerActivity extends AppCompatActivity {
         if (getIntent().hasExtra("CUSTOMER_ID")) {
 
             customerId = getIntent().getStringExtra("CUSTOMER_ID");
-
-
             Cursor cursor = myDb.getCustomerById(customerId);
-
-
             if (cursor.moveToFirst()) {
 
                 tvId.setText("Customer ID: " + cursor.getString(0));
-
                 etName.setText(cursor.getString(1));
-
                 etSurname.setText(cursor.getString(2));
-
                 etPhone.setText(cursor.getString(3));
-
                 etEmail.setText(cursor.getString(4));
-
             }
-
             cursor.close();
-
         }
 
 
@@ -87,64 +69,38 @@ public class UpdateCustomerActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String name = etName.getText().toString().trim();
-
                 String surname = etSurname.getText().toString().trim();
-
                 String phone = etPhone.getText().toString().trim();
-
                 String email = etEmail.getText().toString().trim();
 
-
                 if (name.isEmpty() || surname.isEmpty() || phone.isEmpty() || email.isEmpty()) {
-
                     Toast.makeText(UpdateCustomerActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-
                 } else {
-
                     boolean isUpdated = myDb.updateCustomer(customerId, name, surname, phone, email);
-
                     if (isUpdated) {
-
                         Toast.makeText(UpdateCustomerActivity.this, "Customer Updated Successfully!", Toast.LENGTH_SHORT).show();
-
                         finish();
-
                     } else {
-
                         Toast.makeText(UpdateCustomerActivity.this, "Error Updating", Toast.LENGTH_SHORT).show();
-
                     }
-
                 }
-
             }
-
         });
 
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
-
             @Override
-
             public void onClick(View v) {
-
                 boolean isDeleted = myDb.deleteCustomer(customerId);
-
                 if (isDeleted) {
-
                     Toast.makeText(UpdateCustomerActivity.this, "Customer Deleted Successfully!", Toast.LENGTH_SHORT).show();
-
                     finish();
-
                 } else {
-
                     Toast.makeText(UpdateCustomerActivity.this, "Error Deleting", Toast.LENGTH_SHORT).show();
-
                 }
-
             }
-
         });
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

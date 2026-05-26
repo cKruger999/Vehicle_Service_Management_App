@@ -49,8 +49,6 @@
             android:gravity="center"/>
 
     </LinearLayout>
-
-    <!-- Loading indicator -->
     <ProgressBar
         android:layout_width="48dp"
         android:layout_height="48dp"

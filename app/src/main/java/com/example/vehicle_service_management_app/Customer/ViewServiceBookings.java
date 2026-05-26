@@ -22,7 +22,7 @@ public class ViewServiceBookings extends AppCompatActivity {
 
     ListView lvGarage;
     DatabaseHelper myDb;
-    String customerId, username;
+    String customerId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class ViewServiceBookings extends AppCompatActivity {
 
             if (id == R.id.nav_home) {
                 Intent intent = new Intent(ViewServiceBookings.this, CustomerDash.class);
-                intent.putExtra("LOGGED_IN_CUSTOMER_ID", customerId); // Ensure variable name matches!
+                intent.putExtra("LOGGED_IN_CUSTOMER_ID", customerId);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
                 finish();
@@ -78,8 +78,6 @@ public class ViewServiceBookings extends AppCompatActivity {
             }
             return false;
         });
-
-
     }
 
     private void displayGarageList() {
@@ -90,24 +88,19 @@ public class ViewServiceBookings extends AppCompatActivity {
             return;
         }
 
-        // Use a standard CursorAdapter. It is much simpler and more direct.
         CursorAdapter adapter = new CursorAdapter(this, cursor, 0) {
 
-            // 1. Inflate the layout for each row
             @Override
             public View newView(Context context, Cursor cursor, ViewGroup parent) {
                 return LayoutInflater.from(context).inflate(R.layout.vehicle_list_item, parent, false);
             }
 
-            // 2. Bind the data from the database to your layout views
             @Override
             public void bindView(View view, Context context, Cursor cursor) {
-                // Find your views
                 ImageView imgIcon = view.findViewById(R.id.imgVehicleIcon);
                 TextView tvDetails = view.findViewById(R.id.tvVehicleDetails);
                 TextView tvStatus = view.findViewById(R.id.tvVehicleStatus);
 
-                // Get data from database
                 String brand = cursor.getString(cursor.getColumnIndexOrThrow("vehicleBrand"));
                 String model = cursor.getString(cursor.getColumnIndexOrThrow("vehicleModel"));
                 String reg = cursor.getString(cursor.getColumnIndexOrThrow("registrationNumber"));
@@ -131,13 +124,11 @@ public class ViewServiceBookings extends AppCompatActivity {
                     mechanic = cursor.getString(mechIdx);
                 }
 
-                // 3. Format the text to include Date and Mechanic
                 String fullDetails = brand + " " + model + "\nType: " + type + " | Reg: " + reg + "\nDate: " + date + " | Mechanic: " + mechanic;
 
                 tvDetails.setText(fullDetails);
                 tvStatus.setText("Status: " + status);
 
-                // 4. Set Image based on vehicle type
                 if (type != null) {
                     if (type.equalsIgnoreCase("Truck")) {
                         imgIcon.setImageResource(R.drawable.ic_truck);

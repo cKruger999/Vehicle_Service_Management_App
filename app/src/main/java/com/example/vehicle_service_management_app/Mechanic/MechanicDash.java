@@ -16,7 +16,7 @@ public class MechanicDash extends AppCompatActivity {
 
     TextView tvMechanicWelcome;
     Button btnLogout;
-    String mechanicName, customerId;
+    String mechanicName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

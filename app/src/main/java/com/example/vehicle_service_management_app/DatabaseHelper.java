@@ -40,7 +40,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
     public String authenticateUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String role = null;
 
         if (username.equals("admin") && password.equals("admin123")) {
             return "Admin:-1";
@@ -73,11 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         cv.put("password", password);
 
         long result = db.insert("Customers", null, cv);
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1;
     }
 
     public boolean insertMechanic(String name, String specialization, String experience, String password) {
@@ -89,11 +84,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         cv.put("password", password);
 
         long result = db.insert("Mechanics", null, cv);
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1;
     }
 
     public boolean insertVehicle(String brand, String model, String regNumber, String year, String type, String customerId) {
@@ -107,15 +98,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         cv.put("customerID", customerId);
 
         long result = db.insert("Vehicles", null, cv);
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1;
     }
     public Cursor getCustomerDashboardData(String customerId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        // Added Bookings.bookingDate and Bookings.assignedMechanic to the SELECT query
         return db.rawQuery("SELECT Vehicles.*, Vehicles.vehicleID AS _id, Bookings.serviceStatus, Bookings.bookingDate, Bookings.assignedMechanic FROM Vehicles LEFT JOIN Bookings ON Vehicles.vehicleID = Bookings.vehicleID WHERE Vehicles.customerID = ? ORDER BY Bookings.bookingID DESC", new String[]{customerId});
     }
     public Cursor getAllCustomers() {
@@ -128,7 +114,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return db.rawQuery("SELECT * FROM Customers WHERE customerID = ?", new String[]{id});
     }
 
-    // --- Mechanics ---
     public Cursor getAllMechanics() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM Mechanics", null);
@@ -139,7 +124,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return db.rawQuery("SELECT * FROM Mechanics WHERE mechanicID = ?", new String[]{id});
     }
 
-    // --- Vehicles ---
     public Cursor getAllVehicles() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM Vehicles", null);
@@ -154,10 +138,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return db.rawQuery("SELECT * FROM Vehicles WHERE vehicleID = ?", new String[]{id});
     }
 
-    // =========================================================================================
-    // UPDATE METHODS
-    // =========================================================================================
-
     public boolean updateCustomer(String id, String name, String surname, String phone, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -167,11 +147,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         cv.put("emailAddress", email);
 
         long result = db.update("Customers", cv, "customerID=?", new String[]{id});
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1;
     }
 
     public boolean updateMechanic(String id, String name, String specialization, String experience) {
@@ -182,11 +158,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         cv.put("yearsOfExperience", experience);
 
         long result = db.update("Mechanics", cv, "mechanicID=?", new String[]{id});
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1;
     }
 
     public boolean updateVehicle(String id, String brand, String model, String reg, String year, String custId) {
@@ -199,45 +171,25 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         cv.put("customerID", custId);
 
         long result = db.update("Vehicles", cv, "vehicleID=?", new String[]{id});
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1;
     }
-
-    // =========================================================================================
-    // DELETE METHODS
-    // =========================================================================================
 
     public boolean deleteCustomer(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete("Customers", "customerID=?", new String[]{id});
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1;
     }
 
     public boolean deleteMechanic(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete("Mechanics", "mechanicID=?", new String[]{id});
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1;
     }
 
     public boolean deleteVehicle(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete("Vehicles", "vehicleID=?", new String[]{id});
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1;
     }
 
     public String getRoleBasedId(String username, String role) {
